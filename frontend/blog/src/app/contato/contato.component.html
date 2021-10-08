@@ -1,18 +1,37 @@
 <div class="container mb-5">
   <h1 class="mt-5 mb-5">Entre em contato conosco</h1>
-  <form>
+
+  <div *ngIf="formOk" class="alert alert-success alert-dismissible fade show" role="alert">
+    Contato enviado com sucesso!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="enviarContato()" novalidate>
     <div class="form-group">
       <label for="nome">Nome</label>
-      <input type="text" class="form-control" id="nome" placeholder="digite seu nome">
+      <input type="text" class="form-control" placeholder="digite seu nome" formControlName="name" />
+      <div *ngIf="form.controls.name.touched && form.controls.name.invalid" class="text-danger">
+        <div *ngIf="form.controls.name.errors.required">O nome é obrigatório.</div>
+      </div>
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" placeholder="name@example.com">
+      <input type="email" class="form-control" placeholder="name@example.com" formControlName="email" />
+      <div *ngIf="form.controls.email.touched && form.controls.email.invalid" class="text-danger">
+        <div *ngIf="form.controls.email.errors.required">O email é obrigatório.</div>
+        <div *ngIf="form.controls.email.errors.email">O email está incorreto.</div>
+      </div>
     </div>
     <div class="form-group">
       <label for="mensagem">Mensagem</label>
-      <textarea class="form-control" id="mensagem" rows="3"></textarea>
+      <textarea class="form-control" rows="3" formControlName="message"></textarea>
+      <div *ngIf="form.controls.message.touched && form.controls.message.invalid" class="text-danger">
+        <div *ngIf="form.controls.message.errors.required">A mensagem é obrigatória.</div>
+        <div *ngIf="form.controls.message.errors.maxlength">O tamanho máximo é de 180 caracteres.</div>
+      </div>
     </div>
-    <button class="btn btn-outline-dark">Enviar</button>
+    <button class="btn btn-outline-dark" type="submit" [disabled]="!form.valid || formOk">Enviar</button>
   </form>
 </div>
