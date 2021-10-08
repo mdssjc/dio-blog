@@ -15,8 +15,8 @@
 
           <h6 class="mb-3 text-monospace text-center">Pesquisar por nome</h6>
 
-          <input type="text" class="form-control mb-3 w-100">
-          <button class="btn btn-outline-warning w-100">Pesquisar</button>
+          <input type="text" class="form-control mb-3 w-100" [(ngModel)]="filterName">
+          <button class="btn btn-outline-warning w-100" (click)="filter()">Pesquisar</button>
         </div>
       </div>
     </div>
